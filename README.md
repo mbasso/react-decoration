@@ -1,5 +1,7 @@
 # react-decoration
 
+[![Join the chat at https://gitter.im/mbasso/react-decoration](https://badges.gitter.im/mbasso/react-decoration.svg)](https://gitter.im/mbasso/react-decoration?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/mbasso/react-decoration.svg?branch=master)](https://travis-ci.org/mbasso/react-decoration)
 [![npm version](https://img.shields.io/npm/v/react-decoration.svg)](https://www.npmjs.com/package/react-decoration)
 [![npm downloads](https://img.shields.io/npm/dm/react-decoration.svg?maxAge=2592000)](https://www.npmjs.com/package/react-decoration)
