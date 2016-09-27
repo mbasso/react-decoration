@@ -46,7 +46,7 @@ import {
     width: 250,
   },
 })
-class DateField extends React.Component {
+class InputField extends React.Component {
 
   state = {
     value: 'Hello!'
