@@ -1,0 +1,97 @@
+{
+  "name": "react-decoration",
+  "version": "1.0.0",
+  "description": "A collection of @decorators for React Components",
+  "main": "lib/index.js",
+  "jsnext:main": "es/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src"
+  ],
+  "scripts": {
+    "clean": "rimraf lib dist es .nyc_output",
+    "test": "cross-env BABEL_ENV=commonjs nyc --require babel-register --require ./test/setup.js mocha --recursive",
+    "test:watch": "npm test -- --watch",
+    "test:cov": "nyc report --reporter=text-lcov | coveralls",
+    "check:src": "npm run lint && npm run test",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build:umd": "cross-env BABEL_ENV=commonjs NODE_ENV=development webpack src/index.js dist/react-decoration.js",
+    "build:umd:min": "cross-env BABEL_ENV=commonjs NODE_ENV=production webpack src/index.js dist/react-decoration.min.js",
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "prepublish": "npm run clean && npm run check:src && npm run build && check-es3-syntax lib/ dist/ --kill",
+    "lint": "eslint src test build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbasso/react-decoration.git"
+  },
+  "keywords": [
+    "react",
+    "decoration",
+    "decorator",
+    "annotation",
+    "es7",
+    "high-order-component"
+  ],
+  "author": "Matteo Basso (https://github.com/mbasso)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mbasso/react-decoration/issues"
+  },
+  "homepage": "https://mbasso.github.io/react-decoration",
+  "devDependencies": {
+    "babel-cli": "6.10.1",
+    "babel-core": "6.9.1",
+    "babel-eslint": "6.0.4",
+    "babel-loader": "6.2.4",
+    "babel-plugin-transform-decorators-legacy": "1.3.4",
+    "babel-plugin-transform-es2015-modules-commonjs": "6.10.3",
+    "babel-plugin-transform-es3-member-expression-literals": "6.8.0",
+    "babel-plugin-transform-es3-property-literals": "6.8.0",
+    "babel-plugin-transform-object-rest-spread": "6.8.0",
+    "babel-preset-es2015": "6.5.0",
+    "babel-preset-react": "6.5.0",
+    "babel-preset-stage-0": "6.5.0",
+    "babel-register": "6.9.0",
+    "check-es3-syntax-cli": "0.1.0",
+    "coveralls": "2.11.9",
+    "cross-env": "1.0.7",
+    "eslint": "2.12.0",
+    "eslint-config-airbnb": "9.0.1",
+    "eslint-plugin-import": "1.8.1",
+    "eslint-plugin-jsx-a11y": "1.3.0",
+    "eslint-plugin-react": "5.1.1",
+    "expect": "1.20.2",
+    "istanbul": "0.4.5",
+    "jsdom": "9.5.0",
+    "mocha": "3.0.2",
+    "nyc": "8.3.0",
+    "react": "15.3.1",
+    "react-addons-test-utils": "15.3.1",
+    "rimraf": "2.5.2",
+    "webpack": "1.13.1"
+  },
+  "dependencies": {
+    "autobind-decorator": "1.3.3"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0-0"
+  },
+  "npmName": "react-decoration",
+  "npmFileMap": [
+    {
+      "basePath": "/dist/",
+      "files": [
+        "*.js"
+      ]
+    }
+  ],
+  "browserify": {
+    "transform": [
+      "loose-envify"
+    ]
+  }
+}
