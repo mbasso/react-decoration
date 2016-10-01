@@ -1,19 +1,18 @@
-## @defaultProps(props: Object)
+## @initialState(state: Object)
 
-Defines component's [defaultProps](https://facebook.github.io/react/docs/reusable-components.html#default-prop-values).
+Defines component's [initialState](https://facebook.github.io/react/docs/component-specs.html#getinitialstate).
 
 #### Example
 
 ```js
-@defaultProps({
+@initialState({
   foo: 'bar',
 })
 class TextField extends React.Component {
 
   render() {
-    const { foo, ...others } = this.props;
     return (
-      <input type="text" value={foo} {...others} />
+      <input type="text" value={this.state.foo} {...this.props} />
     );
   }
 }
