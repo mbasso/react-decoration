@@ -14,7 +14,7 @@ class TextField extends React.Component {
   @extractCurrentTarget
   onChange(currentTarget) {
     this.setState({
-      value: currentTarget.value;
+      value: currentTarget.value,
     });
   }
 

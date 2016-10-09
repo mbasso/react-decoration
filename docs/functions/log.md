@@ -1,6 +1,6 @@
-## @stopPropagation
+## @log
 
-Executes [event.stopPropagation()](https://developer.mozilla.org/it/docs/Web/API/Event/stopPropagation) for you.
+Log name and parameters of the decorated function whenever it is called.
 
 #### Example
 
@@ -11,8 +11,9 @@ class TextField extends React.Component {
     value: '',
   }
 
-  @stopPropagation
+  @log
   onChange(e) {
+    // this evaluates console.log('Calling function "onChange" with params: ', e)
     this.setState({
       value: e.target.value,
     });

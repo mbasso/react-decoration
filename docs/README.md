@@ -17,8 +17,12 @@ Here you can find the complete list of decorators, however we encourage you to r
   - [`@transferProps`](components/transferProps.md)
   - [`@clone(component: React.Component)`](components/clone.md)
   - [`@withStyles(styles: Object)`](components/withStyles.md)
+  - [`@renderNothing`](components/renderNothing.md)
+  - [`@renderChildren`](components/renderChildren.md)
+  - [`@renderComponent(component: React.Component)`](components/renderComponent.md)
 - Functions
   - [`@autobind`](functions/autobind.md)
+  - [`@log`](functions/log.md)
   - [`@inject(attribute: string)`](functions/inject.md)
   - [`@injectProps`](functions/injectProps.md)
   - [`@injectState`](functions/injectState.md)
@@ -36,7 +40,9 @@ Here you can find the complete list of decorators, however we encourage you to r
   - [`@extractTarget`](events/extractTarget.md)
   - [`@extractCurrentTarget`](events/extractCurrentTarget.md)
   - [`@extractNativeEvent`](events/extractNativeEvent.md)
+  - [`@extractDataset`](events/extractDataset.md)
 - Lifecycle
+  - [`@lifecycle(functions: Object)`](lifecycle/lifecycle.md)
   - [`@componentWillMount(callback: componentWillMount)`](lifecycle/componentWillMount.md)
   - [`@componentDidMount(callback: componentDidMount)`](lifecycle/componentDidMount.md)
   - [`@componentWillUpdate(callback: componentWillUpdate)`](lifecycle/componentWillUpdate.md)

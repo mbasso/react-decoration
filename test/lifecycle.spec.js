@@ -2,6 +2,7 @@ import expect from 'expect';
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import {
+  lifecycle,
   componentWillMount,
   componentDidMount,
   componentDidUpdate,
@@ -13,6 +14,36 @@ import {
 
 describe('lifecycle', () => {
   const noop = () => {};
+
+  it('lifecycle', (done) => {
+    const values = {
+      componentWillMount: () => {},
+      componentDidMount: () => {},
+    };
+
+    const spyFirst = expect.spyOn(values, 'componentWillMount');
+    const spySecond = expect.spyOn(values, 'componentDidMount');
+
+    @lifecycle({
+      componentWillMount: values.componentWillMount,
+      componentDidMount: () => {
+        values.componentDidMount();
+        expect(spyFirst).toHaveBeenCalled();
+        expect(spySecond).toHaveBeenCalled();
+        done();
+      },
+    })
+    // eslint-disable-next-line
+    class Div extends React.Component {
+      render() {
+        return (
+          <div />
+        );
+      }
+    }
+
+    ReactTestUtils.renderIntoDocument(<Div />);
+  });
 
   it('componentWillMount', (done) => {
     @componentWillMount(done)

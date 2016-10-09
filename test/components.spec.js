@@ -16,6 +16,9 @@ import {
   mapProps,
   clone,
   initialState,
+  renderNothing,
+  renderChildren,
+  renderComponent,
 } from '../src/';
 
 describe('components', () => {
@@ -417,5 +420,60 @@ describe('components', () => {
     const rendered = ReactTestUtils.renderIntoDocument(<Foo />);
     const foo = ReactTestUtils.findRenderedComponentWithType(rendered, Foo);
     expect(foo.state).toEqual(state);
+  });
+
+  it('renderNothing', () => {
+    @renderNothing
+    // eslint-disable-next-line
+    class Div extends React.Component {
+
+    }
+
+    const renderer = ReactTestUtils.createRenderer();
+    renderer.render(<Div foo="foo" bar="bar" example="example" />);
+    const result = renderer.getRenderOutput();
+    expect(result).toEqual(null);
+  });
+
+  it('renderChildren', () => {
+    @renderChildren
+    // eslint-disable-next-line
+    class Wrapper extends React.Component {
+
+    }
+
+    const renderer = ReactTestUtils.createRenderer();
+    renderer.render(
+      <Wrapper>
+        <div />
+      </Wrapper>
+    );
+    const result = renderer.getRenderOutput();
+    expect(result).toEqual(<div />);
+  });
+
+  it('renderComponent', () => {
+    // eslint-disable-next-line
+    class Foo extends React.Component {
+
+      render() {
+        return (
+          <div>
+            foo
+          </div>
+        );
+      }
+    }
+
+    @renderComponent(Foo)
+    // eslint-disable-next-line
+    class Bar extends React.Component {
+
+    }
+
+    const renderer = ReactTestUtils.createRenderer();
+    renderer.render(<Bar foo="bar" />);
+    const result = renderer.getRenderOutput();
+    expect(result).toEqual(<Foo foo="bar" />);
   });
 });

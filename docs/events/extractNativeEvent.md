@@ -14,7 +14,7 @@ class TextField extends React.Component {
   @extractNativeEvent
   onChange(nativeEvent) {
     this.setState({
-      value: nativeEvent.target.value;
+      value: nativeEvent.target.value,
     });
   }
 

@@ -10,6 +10,7 @@ import {
   extractTarget,
   extractValue,
   extractNativeEvent,
+  extractDataset,
 } from '../src/';
 
 describe('events', () => {
@@ -192,6 +193,33 @@ describe('events', () => {
     const rendered = ReactTestUtils.renderIntoDocument(<Input />);
     const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
     ReactTestUtils.Simulate.change(input);
+  });
+
+  it('extractDataset', (done) => {
+    // eslint-disable-next-line
+    class Button extends React.Component {
+      @extractDataset
+      onClick(/* dataset */) {
+        // unable to test dataset:
+        // https://github.com/tmpvar/jsdom/issues/961
+
+        /* expect(dataset).toBeA(Object);
+        expect(dataset.foo).toEqual('bar'); */
+        done();
+      }
+
+      render() {
+        return (
+          <button
+            onClick={this.onClick}
+            data-foo="bar"
+          />
+        );
+      }
+    }
+    const rendered = ReactTestUtils.renderIntoDocument(<Button />);
+    const button = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'button');
+    ReactTestUtils.Simulate.click(button);
   });
 
   it('extractFromEvent', (done) => {

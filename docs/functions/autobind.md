@@ -22,7 +22,7 @@ class Button extends React.Component {
 
   render() {
     return (
-      <button type="text" onClick={this.onClick} />
+      <button onClick={this.onClick} />
     );
   }
 }

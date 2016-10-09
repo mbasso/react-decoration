@@ -3,6 +3,7 @@ import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import {
   autobind,
+  log,
   inject,
   injectProps,
   injectState,
@@ -25,6 +26,35 @@ describe('functions', () => {
     const element = new Component(42);
     const method = element.method;
     expect(method()).toEqual(42);
+  });
+
+  it('log', (done) => {
+    // let spy = null;
+
+    // eslint-disable-next-line
+    class Input extends React.Component {
+      @log
+      onChange() {
+        // expect(spy).toHaveBeenCalled();
+        done();
+      }
+
+      render() {
+        return (
+          <input
+            value="foo"
+            onChange={(e, ...params) => {
+              // cannot spy console.log
+              // spy = expect.spyOn(console, 'log');
+              this.onChange(e, ...params);
+            }}
+          />
+        );
+      }
+    }
+    const rendered = ReactTestUtils.renderIntoDocument(<Input />);
+    const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
+    ReactTestUtils.Simulate.change(input);
   });
 
   it('injectProps', (done) => {

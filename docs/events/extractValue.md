@@ -14,7 +14,7 @@ class TextField extends React.Component {
   @extractValue
   onChange(value) {
     this.setState({
-      value;
+      value,
     });
   }
 

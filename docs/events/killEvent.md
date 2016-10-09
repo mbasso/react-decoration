@@ -14,7 +14,7 @@ class TextField extends React.Component {
   @killEvent
   onChange(e) {
     this.setState({
-      value: e.target.value;
+      value: e.target.value,
     });
   }
 
