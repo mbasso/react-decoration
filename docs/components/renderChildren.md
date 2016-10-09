@@ -1,11 +1,11 @@
-## @renderNothing
+## @renderChildren
 
 Defines a render function that returns component's children.
 
 #### Example
 
 ```js
-@renderNothing
+@renderChildren
 class DoSomething extends React.Component {
 
   componentDidMount() {
