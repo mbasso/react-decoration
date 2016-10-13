@@ -19,6 +19,7 @@ import {
   renderNothing,
   renderChildren,
   renderComponent,
+  handleRenderError,
 } from '../src/';
 
 describe('components', () => {
@@ -475,5 +476,81 @@ describe('components', () => {
     renderer.render(<Bar foo="bar" />);
     const result = renderer.getRenderOutput();
     expect(result).toEqual(<Foo foo="bar" />);
+  });
+
+  it('handleRenderError', () => {
+    // eslint-disable-next-line
+    class Foo extends React.Component {
+
+      render() {
+        return (
+          <div>
+            foo
+          </div>
+        );
+      }
+    }
+
+    let renderer = ReactTestUtils.createRenderer();
+    renderer.render(<Foo />);
+    let result = renderer.getRenderOutput();
+    expect(result).toEqual(<div>foo</div>);
+
+    @handleRenderError()
+    // eslint-disable-next-line
+    class Bar extends React.Component {
+
+      render() {
+        throw new Error('Error during render');
+      }
+    }
+
+    renderer = ReactTestUtils.createRenderer();
+    renderer.render(<Bar />);
+    result = renderer.getRenderOutput();
+    expect(result).toEqual(<div>Error during render</div>);
+
+    @handleRenderError((ex) => <div>{`${ex.message.length}`}</div>)
+    // eslint-disable-next-line
+    class Foo2 extends React.Component {
+
+      render() {
+        throw new Error('Error during render');
+      }
+    }
+
+    renderer = ReactTestUtils.createRenderer();
+    renderer.render(<Foo2 />);
+    result = renderer.getRenderOutput();
+    expect(result).toEqual(<div>19</div>);
+
+    @handleRenderError('Unable to render this component')
+    // eslint-disable-next-line
+    class Bar2 extends React.Component {
+
+      render() {
+        throw new Error('Error during render');
+      }
+    }
+
+    renderer = ReactTestUtils.createRenderer();
+    renderer.render(<Bar2 />);
+    result = renderer.getRenderOutput();
+    expect(result).toEqual(<div>Unable to render this component</div>);
+
+    @handleRenderError(Foo)
+    // eslint-disable-next-line
+    class Foo3 extends React.Component {
+
+      render() {
+        throw new Error('Error during render');
+      }
+    }
+
+    renderer = ReactTestUtils.createRenderer();
+    renderer.render(<Foo3 />);
+    result = renderer.getRenderOutput();
+    expect(result.type).toEqual(Foo);
+    expect(result.props.error).toBeA(Error);
   });
 });

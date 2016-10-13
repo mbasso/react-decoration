@@ -20,6 +20,7 @@ Here you can find the complete list of decorators, however we encourage you to r
   - [`@renderNothing`](components/renderNothing.md)
   - [`@renderChildren`](components/renderChildren.md)
   - [`@renderComponent(component: React.Component)`](components/renderComponent.md)
+  - [`@handleRenderError(handler: React.Component, string, function or nothing)`](components/handleRenderError.md)
 - Functions
   - [`@autobind`](functions/autobind.md)
   - [`@log`](functions/log.md)

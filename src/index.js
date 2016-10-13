@@ -15,6 +15,7 @@ export initialState from './decorators/components/initialState';
 export renderNothing from './decorators/components/renderNothing';
 export renderChildren from './decorators/components/renderChildren';
 export renderComponent from './decorators/components/renderComponent';
+export handleRenderError from './decorators/components/handleRenderError';
 export context from './decorators/context/context';
 export childContext from './decorators/context/childContext';
 export childContextTypes from './decorators/context/childContextTypes';
