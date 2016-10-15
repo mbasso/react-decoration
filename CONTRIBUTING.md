@@ -18,7 +18,7 @@ Visit the [issue tracker](https://github.com/mbasso/react-decoration/issues) to 
 Fork, then clone the repo:
 
 ```
-git clone https://github.com/your-username/react-decoration.git
+git clone https://github.com/mbasso/react-decoration.git
 ```
 
 ### Building
@@ -33,7 +33,8 @@ npm run build
 To create just a CommonJS module-per-module build:
 
 ```
-npm run build:lib
+npm run build:commonjs
+
 ```
 
 The result will be in the `lib` folder.
