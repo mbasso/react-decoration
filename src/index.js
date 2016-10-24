@@ -34,6 +34,8 @@ export log from './decorators/functions/log';
 export inject from './decorators/functions/inject';
 export injectProps from './decorators/functions/injectProps';
 export injectState from './decorators/functions/injectState';
+export debounce from './decorators/functions/debounce';
+export throttle from './decorators/functions/throttle';
 export lifecycle from './decorators/lifecycle/lifecycle';
 export componentWillMount from './decorators/lifecycle/componentWillMount';
 export componentDidMount from './decorators/lifecycle/componentDidMount';

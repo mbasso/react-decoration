@@ -27,6 +27,8 @@ Here you can find the complete list of decorators, however we encourage you to r
   - [`@inject(attribute: string)`](functions/inject.md)
   - [`@injectProps`](functions/injectProps.md)
   - [`@injectState`](functions/injectState.md)
+  - [`@debounce(wait: number = 300, immediate: boolean = false)`](functions/debounce.md)
+  - [`@throttle(wait: number = 300, options: Object = { leading: true, trailing: true })`](functions/throttle.md)
 - Context
   - [`@context(childContextTypes: contextTypes, childContext: Object)`](context/context.md)
   - [`@contextTypes(contextTypes: contextTypes)`](context/contextTypes.md)
