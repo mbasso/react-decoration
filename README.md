@@ -31,6 +31,7 @@ Once you have installed react-decoration, supposing a CommonJS environment, you 
 ```js
 import React from 'react';
 import { getItems } from './utils';
+import { AutoComplete } from './components';
 import {
   withStyles,
   debounce,
@@ -75,7 +76,7 @@ class SampleForm extends React.Component {
     // default prevented
     // propagation stopped
 
-    alert('AutoComplete value is: ' + this.state.value);
+    alert(`AutoComplete value is: ${this.state.value}`);
   }
 
   render() {
