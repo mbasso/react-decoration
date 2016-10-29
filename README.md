@@ -30,11 +30,12 @@ Once you have installed react-decoration, supposing a CommonJS environment, you 
 
 ```js
 import React from 'react';
+import { getItems } from './utils';
 import {
   withStyles,
-  autobind,
+  debounce,
   killEvent,
-  extractValue,
+  handleRenderError,
 } from 'react-decoration';
 
 @withStyles({
@@ -46,40 +47,50 @@ import {
     width: 250,
   },
 })
-class InputField extends React.Component {
+@handleRenderError((ex) => <div className="danger">{ex.message}<div>)
+class SampleForm extends React.Component {
 
   state = {
-    value: 'Hello!'
+    value: 'Hello!',
+    items: [],
   }
 
-  @autobind
-  checkValue() {
-    return !isNaN(new Date(this.state.value));
+  @debounce(500)
+  handleChange(e) {
+    getItems().then((response) => {
+      this.setState({
+        value: this.state.value,
+        items: response.data.items,
+      });
+    });
+
+    this.setState({
+      value: e.target.value,
+      items: this.state.items,
+    });
   }
 
   @killEvent
-  @extractValue
-  handleChange(value) {
-    this.setState({
-      value,
-    });
+  handleSubmit() {
+    // default prevented
+    // propagation stopped
+
+    alert('AutoComplete value is: ' + this.state.value);
   }
 
   render() {
     const { styles } = this.props;
     return (
       <div style={styles.container}>
-        <input
-          type="text"
+        <AutoComplete
           value={this.state.value}
+          items={this.state.items}
           onChange={this.handleChange}
           style={styles.input}
         />
-        {
-          !this.checkValue() && (
-            <p>Formatting error</p>
-          )
-        }
+        <button onClick={this.handleSubmit}>
+          Submit
+        </button>
       </div>
     );
   }
