@@ -1,6 +1,6 @@
 ## @hoc(HOC: function [, ...params])
 
-Applies an HOC to the given component.
+Applies an Higher Order Component (HOC) to the given component.
 Its behavior is based on the given parameters, for example:
 
 - `@hoc(injectIntl)` is the equivalent of `injectIntl(component)`
