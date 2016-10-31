@@ -47,7 +47,7 @@ specification. In this way you will be able to avoid a series of problems that c
 
 Please note that react-decoration does not include polyfill, so, if you want to support old browsers, you have to emulate `Object.setPrototypeOf` and `Object.assign`.
 
-Consider also that decorators can be imported in this 2 different ways:
+Consider also that decorators can be imported in 2 different ways:
 
 ```js
 // from the default object
