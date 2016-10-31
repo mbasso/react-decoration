@@ -45,4 +45,15 @@ Here is a quick installation guide from [transform-decorators-legacy](https://gi
 Subsequently to this, you should read [this](https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy#best-effort) 
 specification. In this way you will be able to avoid a series of problems that can take a lot of time to resolve.
 
-Please note also that react-decoration does not include polyfill, so, if you want to support old browsers, you have to emulate `Object.setPrototypeOf` and `Object.assign`.
+Please note that react-decoration does not include polyfill, so, if you want to support old browsers, you have to emulate `Object.setPrototypeOf` and `Object.assign`.
+
+Consider also that decorators can be imported in this 2 different ways:
+
+```js
+// from the default object
+import { throttle } from 'react-decoration';
+// or directly from the single file: react-decoration/lib/decorators/{namespace}/{decorator}
+import throttle from 'react-decoration/lib/decorators/functions/throttle';
+```
+
+Importing each decorator from its file is suggested, importing a single decorator from react-decoration, infact, causes the import of all modules, that increase the bundle size.
