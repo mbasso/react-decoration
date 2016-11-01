@@ -10,6 +10,9 @@ Defines component's lifecycle method [componentWillMount](https://facebook.githu
 })
 class Foo extends React.Component {
 
+  // needed to avoid readonly exception
+  componentWillMount() {}
+
   render() {
     return (
       <div>

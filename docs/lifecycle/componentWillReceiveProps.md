@@ -10,6 +10,9 @@ Defines component's lifecycle method [componentWillReceiveProps](https://faceboo
 })
 class Foo extends React.Component {
 
+  // needed to avoid readonly exception
+  componentWillReceiveProps() {}
+
   render() {
     return (
       <div>

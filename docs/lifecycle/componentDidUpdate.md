@@ -10,6 +10,9 @@ Defines component's lifecycle method [componentDidUpdate](https://facebook.githu
 })
 class Foo extends React.Component {
 
+  // needed to avoid readonly exception
+  componentDidUpdate() {}
+
   render() {
     return (
       <div>

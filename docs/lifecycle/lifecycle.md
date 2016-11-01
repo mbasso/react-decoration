@@ -18,6 +18,12 @@ Defines component's lifecycle methods.
 })
 class Foo extends React.Component {
 
+  // needed to avoid readonly exception
+  componentWillMount() {}
+
+  // needed to avoid readonly exception
+  componentDidMount() {}
+
   render() {
     return (
       <div>

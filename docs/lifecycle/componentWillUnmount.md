@@ -10,6 +10,9 @@ Defines component's lifecycle method [componentWillUnmount](https://facebook.git
 })
 class Foo extends React.Component {
 
+  // needed to avoid readonly exception
+  componentWillUnmount() {}
+
   render() {
     return (
       <div>
