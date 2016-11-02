@@ -17,6 +17,9 @@ class ThemeProvider extends React.Component {
     theme: React.PropTypes.object,
   }
 
+  // needed to avoid readonly exception
+  getChildContext() {}
+
   render() {
     return (
       <div>
