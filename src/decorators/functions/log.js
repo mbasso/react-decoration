@@ -9,7 +9,7 @@ export default function log(target, key, descriptor) {
     value: function logger(...params) {
       //eslint-disable-next-line
       console.log(`Calling function "${key}" with params: `, ...params);
-      return userFunc.apply(this, ...params);
+      return userFunc.apply(this, [...params]);
     },
   };
 }

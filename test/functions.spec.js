@@ -36,8 +36,9 @@ describe('functions', () => {
     // eslint-disable-next-line
     class Input extends React.Component {
       @log
-      onChange() {
+      onChange(e) {
         // expect(spy).toHaveBeenCalled();
+        expect(e.target.value).toEqual('foo');
         done();
       }
 
@@ -56,7 +57,7 @@ describe('functions', () => {
     }
     const rendered = ReactTestUtils.renderIntoDocument(<Input />);
     const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
-    ReactTestUtils.Simulate.change(input);
+    ReactTestUtils.Simulate.change(input, { target: { value: 'foo' } });
   });
 
   it('injectProps', (done) => {
