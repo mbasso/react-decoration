@@ -1,8 +1,13 @@
 import expect from 'expect';
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import { validateClass, validateFunction } from '../src/utils/validators';
+import {
+  validateClass,
+  validateFunction,
+  validateClassAndFunction,
+} from '../src/utils/validators';
 import getEventPreprocessor from '../src/utils/getEventPreprocessor';
+import wrapLifecycleMethod from '../src/utils/wrapLifecycleMethod';
 
 describe('utils', () => {
   it('should get a decorator for given events', () => {
@@ -49,5 +54,74 @@ describe('utils', () => {
     expect(
       () => validateFunction(43, 'foo')
     ).toThrow('@foo decorator can only be applied to methods not: number');
+  });
+
+  it('should validate class and function', () => {
+    expect(() => validateClassAndFunction(() => 43)).toNotThrow();
+    expect(() => validateClassAndFunction(class Foo {})).toNotThrow();
+    expect(() => validateClassAndFunction(43)).toThrow();
+    expect(() => validateClassAndFunction(undefined)).toThrow();
+    expect(
+      () => validateClassAndFunction(43, 'foo')
+    ).toThrow('@foo decorator can only be applied to class and methods not: number');
+  });
+
+  it('should wrap a lifecycle method', (done) => {
+    @wrapLifecycleMethod('componentDidUpdate',
+      function componentDidUpdateWrapper(prevProps, prevState) {
+        expect(prevProps).toEqual({});
+        expect(prevState).toEqual({});
+        expect(this.foo).toEqual('bar');
+        return 'foo';
+      }
+    )
+    // eslint-disable-next-line
+    class DivWithoutUserMethod extends React.Component {
+
+      constructor(...params) {
+        super(...params);
+        expect(this.componentDidUpdate({}, {})).toEqual('foo');
+      }
+
+      foo = 'bar'
+
+      render() {
+        return (
+          <div />
+        );
+      }
+    }
+
+    @wrapLifecycleMethod('componentDidUpdate', (prevProps, prevState, res) => {
+      expect(prevProps).toEqual({});
+      expect(prevState).toEqual({});
+      expect(res).toEqual(true);
+      return 'foo';
+    })
+    // eslint-disable-next-line
+    class DivWithUserMethod extends React.Component {
+
+      constructor(...params) {
+        super(...params);
+        expect(this.componentDidUpdate({}, {})).toEqual('foo');
+        done();
+      }
+
+      componentDidUpdate() {
+        expect(this.foo).toEqual('bar');
+        return true;
+      }
+
+      foo = 'bar';
+
+      render() {
+        return (
+          <div />
+        );
+      }
+    }
+
+    ReactTestUtils.renderIntoDocument(<DivWithoutUserMethod />);
+    ReactTestUtils.renderIntoDocument(<DivWithUserMethod />);
   });
 });

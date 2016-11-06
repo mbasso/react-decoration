@@ -21,6 +21,7 @@ Here you can find the complete list of decorators, however we encourage you to r
   - [`@renderChildren`](components/renderChildren.md)
   - [`@renderComponent(component: React.Component)`](components/renderComponent.md)
   - [`@handleRenderError(handler: React.Component, string, function or nothing)`](components/handleRenderError.md)
+  - [`@perf(options: Object)`](components/perf.md)
 - Functions
   - [`@autobind`](functions/autobind.md)
   - [`@log`](functions/log.md)
@@ -29,6 +30,9 @@ Here you can find the complete list of decorators, however we encourage you to r
   - [`@injectState`](functions/injectState.md)
   - [`@debounce(wait: number = 300, immediate: boolean = false)`](functions/debounce.md)
   - [`@throttle(wait: number = 300, options: Object = { leading: true, trailing: true })`](functions/throttle.md)
+  - [`@trace`](functions/trace.md)
+  - [`@time(label: string)`](functions/time.md)
+  - [`@measure(callback: function = console.log)`](functions/measure.md)
 - Context
   - [`@context(childContextTypes: contextTypes, childContext: Object)`](context/context.md)
   - [`@contextTypes(contextTypes: contextTypes)`](context/contextTypes.md)

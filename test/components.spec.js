@@ -1,6 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
+import Perf from 'react-addons-perf';
 import {
   component,
   pureComponent,
@@ -20,6 +21,7 @@ import {
   renderChildren,
   renderComponent,
   handleRenderError,
+  perf,
 } from '../src/';
 
 describe('components', () => {
@@ -552,5 +554,112 @@ describe('components', () => {
     result = renderer.getRenderOutput();
     expect(result.type).toEqual(Foo);
     expect(result.props.error).toBeA(Error);
+  });
+
+  it('perf', () => {
+    const spyStart = expect.spyOn(Perf, 'start');
+    const spyStop = expect.spyOn(Perf, 'stop');
+    const spyInclusive = expect.spyOn(Perf, 'printInclusive');
+    const spyExclusive = expect.spyOn(Perf, 'printExclusive');
+    let willMount;
+    let didMount;
+
+    const resetVariables = () => {
+      willMount = false;
+      didMount = false;
+    };
+    resetVariables();
+
+    @perf()
+    // eslint-disable-next-line
+    class Div extends React.Component {
+
+      componentWillMount() {
+        willMount = this.value;
+      }
+
+      componentDidMount() {
+        didMount = this.value;
+      }
+
+      value = true;
+
+      render() {
+        return (
+          <div />
+        );
+      }
+    }
+
+    ReactTestUtils.renderIntoDocument(<Div />);
+    expect(spyStart.calls.length).toEqual(1);
+    expect(spyStop.calls.length).toEqual(1);
+    expect(spyInclusive.calls.length).toEqual(0);
+    expect(spyExclusive.calls.length).toEqual(0);
+    expect(willMount).toEqual(true);
+    expect(didMount).toEqual(true);
+
+    resetVariables();
+
+    @perf({
+      prints: ['exclusive'],
+      event: 'mount',
+    })
+    // eslint-disable-next-line
+    class DivWithPerf extends React.Component {
+
+      componentWillMount() {
+        willMount = true;
+      }
+
+      componentDidMount() {
+        didMount = true;
+      }
+
+      render() {
+        return (
+          <div />
+        );
+      }
+    }
+
+    ReactTestUtils.renderIntoDocument(<DivWithPerf />);
+    expect(spyStart.calls.length).toEqual(2);
+    expect(spyStop.calls.length).toEqual(2);
+    expect(spyInclusive.calls.length).toEqual(0);
+    expect(spyExclusive.calls.length).toEqual(1);
+    expect(willMount).toEqual(true);
+    expect(didMount).toEqual(true);
+
+    resetVariables();
+
+    // eslint-disable-next-line
+    class DivWithMethodPerf extends React.Component {
+
+      @perf({
+        prints: ['inclusive', 'foo'],
+      })
+      process() {
+        willMount = this.value;
+        didMount = this.value;
+      }
+
+      value = true;
+
+      render() {
+        this.process();
+        return (
+          <div />
+        );
+      }
+    }
+
+    ReactTestUtils.renderIntoDocument(<DivWithMethodPerf />);
+    expect(spyStart.calls.length).toEqual(3);
+    expect(spyStop.calls.length).toEqual(3);
+    expect(spyInclusive.calls.length).toEqual(1);
+    expect(spyExclusive.calls.length).toEqual(1);
+    expect(willMount).toEqual(true);
+    expect(didMount).toEqual(true);
   });
 });

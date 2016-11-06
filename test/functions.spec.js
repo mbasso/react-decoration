@@ -9,6 +9,9 @@ import {
   injectState,
   debounce,
   throttle,
+  trace,
+  time,
+  measure,
 } from '../src/';
 
 describe('functions', () => {
@@ -309,5 +312,223 @@ describe('functions', () => {
     setTimeout(() => {
       simulateTextInput(TrailingEdgeInput);
     }, 500);
+  });
+
+  it('trace', (done) => {
+    let spy = null;
+
+    // eslint-disable-next-line
+    class Input extends React.Component {
+
+      @trace
+      onChange(e) {
+        expect(e.target.value).toEqual('foo');
+        expect(this.foo).toEqual('bar');
+        expect(spy).toHaveBeenCalled();
+        done();
+      }
+
+      foo = 'bar'
+
+      render() {
+        return (
+          <input
+            value="foo"
+            onChange={(e, ...params) => {
+              spy = expect.spyOn(console, 'trace');
+              this.onChange(e, ...params);
+            }}
+          />
+        );
+      }
+    }
+    const rendered = ReactTestUtils.renderIntoDocument(<Input />);
+    const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
+    ReactTestUtils.Simulate.change(input, { target: { value: 'foo' } });
+  });
+
+  it('time', (done) => {
+    const message = 'onInputChange';
+    const spyTime = expect.spyOn(console, 'time');
+    const spyTimeEnd = expect.spyOn(console, 'timeEnd');
+
+    // eslint-disable-next-line
+    class Input extends React.Component {
+
+      constructor(...params) {
+        super(...params);
+        this.onChange = this.onChange.bind(this);
+      }
+
+      @time(message)
+      onChange(e) {
+        expect(e.target.value).toEqual('foo');
+        expect(this.foo).toEqual('bar');
+        setTimeout(() => {
+          expect(spyTime).toHaveBeenCalledWith(message);
+          expect(spyTimeEnd).toHaveBeenCalledWith(message);
+          done();
+        }, 300);
+      }
+
+      foo = 'bar'
+
+      render() {
+        return (
+          <input
+            value="foo"
+            onChange={this.onChange}
+          />
+        );
+      }
+    }
+    const rendered = ReactTestUtils.renderIntoDocument(<Input />);
+    const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
+    ReactTestUtils.Simulate.change(input, { target: { value: 'foo' } });
+  });
+
+  it('measure', (done) => {
+    const spy = expect.spyOn(performance, 'now');
+
+    const simulateChange = (Input) => {
+      const rendered = ReactTestUtils.renderIntoDocument(<Input />);
+      const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
+      ReactTestUtils.Simulate.change(input);
+    };
+
+    // eslint-disable-next-line
+    class InputWithoutCallback extends React.Component {
+
+      constructor(...params) {
+        super(...params);
+        this.onChange = this.onChange.bind(this);
+      }
+
+      @measure()
+      onChange(e) {
+        expect(e.target.value).toEqual('foo');
+        expect(this.foo).toEqual('bar');
+        setTimeout(() => {
+          expect(spy).toHaveBeenCalled();
+        }, 300);
+      }
+
+      foo = 'bar'
+
+      render() {
+        return (
+          <input
+            value="foo"
+            onChange={this.onChange}
+          />
+        );
+      }
+    }
+
+    simulateChange(InputWithoutCallback);
+
+    global.performance = {};
+
+    // eslint-disable-next-line
+    class InputWithoutPerformance extends React.Component {
+      @measure((performance) => {
+        setTimeout(() => {
+          expect(performance).toEqual({
+            before: {
+              time: 0,
+              memory: {
+                jsHeapSizeLimit: 0,
+                totalJSHeapSize: 0,
+                usedJSHeapSize: 0,
+              },
+            },
+            after: {
+              time: 0,
+              memory: {
+                jsHeapSizeLimit: 0,
+                totalJSHeapSize: 0,
+                usedJSHeapSize: 0,
+              },
+            },
+            comparison: {
+              time: 0,
+              memory: {
+                usedJSHeapSize: 0,
+              },
+            },
+          });
+        }, 300);
+      })
+      onChange() {
+        // do nothing
+      }
+
+      render() {
+        return (
+          <input
+            value="foo"
+            onChange={this.onChange}
+          />
+        );
+      }
+    }
+
+    simulateChange(InputWithoutPerformance);
+
+    global.performance = {
+      now: () => 1000,
+      memory: {
+        jsHeapSizeLimit: 1530000000,
+        totalJSHeapSize: 24500000,
+        usedJSHeapSize: 19300000,
+      },
+    };
+
+    // eslint-disable-next-line
+    class InputWithCallback extends React.Component {
+      @measure((performance) => {
+        setTimeout(() => {
+          expect(performance).toEqual({
+            before: {
+              time: 1000,
+              memory: {
+                jsHeapSizeLimit: 1530000000,
+                totalJSHeapSize: 24500000,
+                usedJSHeapSize: 19300000,
+              },
+            },
+            after: {
+              time: 1000,
+              memory: {
+                jsHeapSizeLimit: 1530000000,
+                totalJSHeapSize: 24500000,
+                usedJSHeapSize: 19300000,
+              },
+            },
+            comparison: {
+              time: 0,
+              memory: {
+                usedJSHeapSize: 0,
+              },
+            },
+          });
+          done();
+        }, 300);
+      })
+      onChange() {
+        // do nothing
+      }
+
+      render() {
+        return (
+          <input
+            value="foo"
+            onChange={this.onChange}
+          />
+        );
+      }
+    }
+
+    simulateChange(InputWithCallback);
   });
 });
