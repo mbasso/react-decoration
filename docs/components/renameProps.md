@@ -14,7 +14,7 @@ Renames props to inject into the decorated component.
 class Foo extends React.Component {
 
   static propTypes = {
-    bar: React.PropTypes.string,
+    bar: PropTypes.string,
   }
 
   render() {

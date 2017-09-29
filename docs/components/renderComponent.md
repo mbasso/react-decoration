@@ -8,7 +8,7 @@ Defines a render function that returns the given component.
 class Foo extends React.Component {
 
   static propTypes = {
-    foo: React.PropTypes.string,
+    foo: PropTypes.string,
   }
 
   render() {

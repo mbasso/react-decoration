@@ -1,6 +1,7 @@
 import expect from 'expect';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
+import { createRenderer } from 'react-test-renderer/shallow';
 import {
   autobind,
   log,
@@ -94,7 +95,7 @@ describe('functions', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="bar" />);
   });
 
@@ -128,7 +129,7 @@ describe('functions', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div />);
   });
 
@@ -155,7 +156,7 @@ describe('functions', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div />);
   });
 

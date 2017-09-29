@@ -1,6 +1,8 @@
 import expect from 'expect';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import PropTypes from 'prop-types';
+import ReactTestUtils from 'react-dom/test-utils';
+import { createRenderer } from 'react-test-renderer/shallow';
 import {
   component,
   pureComponent,
@@ -24,7 +26,7 @@ import {
 
 describe('components', () => {
   const types = {
-    foo: React.PropTypes.string,
+    foo: PropTypes.string,
   };
 
   it('propTypes', () => {
@@ -83,7 +85,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div bar="foo" />);
     const span = renderer.getRenderOutput();
     expect(span.type).toBe('span');
@@ -123,7 +125,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div bar="foo" />);
     const span = renderer.getRenderOutput();
     expect(span.type).toBe('span');
@@ -147,7 +149,7 @@ describe('components', () => {
     }
 
     const renderDiv = () => {
-      const renderer = ReactTestUtils.createRenderer();
+      const renderer = createRenderer();
       renderer.render(<Div />);
     };
 
@@ -167,7 +169,7 @@ describe('components', () => {
     }
 
     const renderDiv = () => {
-      const renderer = ReactTestUtils.createRenderer();
+      const renderer = createRenderer();
       renderer.render(<Div />);
     };
 
@@ -207,7 +209,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div />);
     const result = renderer.getRenderOutput();
     expect(result.props.styles).toEqual(style);
@@ -221,8 +223,8 @@ describe('components', () => {
     class Div extends React.Component {
 
       static propTypes = {
-        name: React.PropTypes.string,
-        surname: React.PropTypes.string,
+        name: PropTypes.string,
+        surname: PropTypes.string,
       }
 
       render() {
@@ -232,7 +234,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div name="Matteo" surname="Basso" />);
     const div = renderer.getRenderOutput();
     expect(div.props.name).toEqual('Matteo');
@@ -255,7 +257,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div />);
     const div = renderer.getRenderOutput();
     expect(div.props.name).toEqual('Matteo');
@@ -268,7 +270,7 @@ describe('components', () => {
     class Div extends React.Component {
 
       static propTypes = {
-        foo: React.PropTypes.string,
+        foo: PropTypes.string,
       }
 
       render() {
@@ -278,7 +280,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" />);
     const result = renderer.getRenderOutput();
     expect(result.props).toEqual({
@@ -303,7 +305,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" example="example" />);
     const result = renderer.getRenderOutput();
     expect(result.props).toEqual({
@@ -331,7 +333,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" example="example" />);
     const result = renderer.getRenderOutput();
     expect(result.props).toEqual({
@@ -346,11 +348,11 @@ describe('components', () => {
     class Foo extends React.Component {
 
       static propTypes = {
-        foo: React.PropTypes.string,
+        foo: PropTypes.string,
       }
 
       static childContextTypes = {
-        example: React.PropTypes.string,
+        example: PropTypes.string,
       }
 
       getChildContext() {
@@ -373,7 +375,7 @@ describe('components', () => {
     class Bar extends React.Component {
 
       static propTypes = {
-        bar: React.PropTypes.string,
+        bar: PropTypes.string,
       }
 
       render() {
@@ -386,15 +388,15 @@ describe('components', () => {
     }
 
     expect(Bar.propTypes).toEqual({
-      bar: React.PropTypes.string,
+      bar: PropTypes.string,
     });
     expect(Bar.childContextTypes).toEqual({
-      example: React.PropTypes.string,
+      example: PropTypes.string,
     });
     expect(Bar.prototype.getChildContext()).toEqual({
       example: 'fooBar',
     });
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Bar />);
     const rendered = renderer.getRenderOutput();
     expect(rendered.type).toBe('div');
@@ -430,7 +432,7 @@ describe('components', () => {
 
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" example="example" />);
     const result = renderer.getRenderOutput();
     expect(result).toEqual(null);
@@ -443,7 +445,7 @@ describe('components', () => {
 
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(
       <Wrapper>
         <div />
@@ -472,7 +474,7 @@ describe('components', () => {
 
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Bar foo="bar" />);
     const result = renderer.getRenderOutput();
     expect(result).toEqual(<Foo foo="bar" />);
@@ -491,7 +493,7 @@ describe('components', () => {
       }
     }
 
-    let renderer = ReactTestUtils.createRenderer();
+    let renderer = createRenderer();
     renderer.render(<Foo />);
     let result = renderer.getRenderOutput();
     expect(result).toEqual(<div>foo</div>);
@@ -505,7 +507,7 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Bar />);
     result = renderer.getRenderOutput();
     expect(result).toEqual(<div>Error during render</div>);
@@ -519,7 +521,7 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Foo2 />);
     result = renderer.getRenderOutput();
     expect(result).toEqual(<div>19</div>);
@@ -533,7 +535,7 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Bar2 />);
     result = renderer.getRenderOutput();
     expect(result).toEqual(<div>Unable to render this component</div>);
@@ -547,7 +549,7 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Foo3 />);
     result = renderer.getRenderOutput();
     expect(result.type).toEqual(Foo);

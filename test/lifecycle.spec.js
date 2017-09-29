@@ -1,6 +1,6 @@
 import expect from 'expect';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import {
   lifecycle,
   componentWillMount,
@@ -13,12 +13,12 @@ import {
 } from '../src/';
 
 describe('lifecycle', () => {
-  const noop = () => {};
+  const noop = () => { };
 
   it('lifecycle', (done) => {
     const values = {
-      componentWillMount: () => {},
-      componentDidMount: () => {},
+      componentWillMount: () => { },
+      componentDidMount: () => { },
     };
 
     const spyFirst = expect.spyOn(values, 'componentWillMount');

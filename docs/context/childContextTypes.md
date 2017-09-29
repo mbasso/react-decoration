@@ -6,7 +6,7 @@ Defines component's [childContextTypes](https://facebook.github.io/react/docs/co
 
 ```js
 @childContextTypes({
-  theme: React.PropTypes.object,
+  theme: PropTypes.object,
 })
 class ThemeProvider extends React.Component {
 

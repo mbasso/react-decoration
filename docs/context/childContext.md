@@ -14,7 +14,7 @@ Defines the result of component's [getChildContext](https://facebook.github.io/r
 class ThemeProvider extends React.Component {
 
   static contextTypes = {
-    theme: React.PropTypes.object,
+    theme: PropTypes.object,
   }
 
   // needed to avoid readonly exception

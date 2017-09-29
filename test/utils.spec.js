@@ -1,6 +1,6 @@
 import expect from 'expect';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import ReactTestUtils from 'react-dom/test-utils';
 import {
   validateClass,
   validateFunction,
@@ -39,7 +39,7 @@ describe('utils', () => {
   });
 
   it('should validate class', () => {
-    expect(() => validateClass(class Foo {})).toNotThrow();
+    expect(() => validateClass(class Foo { })).toNotThrow();
     expect(() => validateClass(43)).toThrow();
     expect(() => validateClass(undefined)).toThrow();
     expect(
@@ -58,7 +58,7 @@ describe('utils', () => {
 
   it('should validate class and function', () => {
     expect(() => validateClassAndFunction(() => 43)).toNotThrow();
-    expect(() => validateClassAndFunction(class Foo {})).toNotThrow();
+    expect(() => validateClassAndFunction(class Foo { })).toNotThrow();
     expect(() => validateClassAndFunction(43)).toThrow();
     expect(() => validateClassAndFunction(undefined)).toThrow();
     expect(

@@ -9,7 +9,7 @@ Aggregates props that are not specified in `propTypes` inside `others` prop.
 class Foo extends React.Component {
 
   static propTypes = {
-    foo: React.PropTypes.string,
+    foo: PropTypes.string,
   }
 
   render() {
