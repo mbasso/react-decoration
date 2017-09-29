@@ -16,8 +16,8 @@ Defines a middleware that take props, process them and return new props to the d
 class User extends React.Component {
 
   static propTypes = {
-    name: React.PropTypes.string,
-    surname: React.PropTypes.string,
+    name: PropTypes.string,
+    surname: PropTypes.string,
   }
 
   render() {

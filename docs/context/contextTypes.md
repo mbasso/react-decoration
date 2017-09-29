@@ -6,7 +6,7 @@ Defines component's [contextTypes](https://facebook.github.io/react/docs/context
 
 ```js
 @contextTypes({
-  theme: React.PropTypes.object,
+  theme: PropTypes.object,
 })
 class TextField extends React.Component {
 

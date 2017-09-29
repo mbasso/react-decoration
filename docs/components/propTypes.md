@@ -6,7 +6,7 @@ Defines component's [propTypes](https://facebook.github.io/react/docs/reusable-c
 
 ```js
 @propTypes({
-  foo: React.PropTypes.string,
+  foo: PropTypes.string,
 })
 class TextField extends React.Component {
 

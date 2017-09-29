@@ -8,8 +8,8 @@ Injects component's props in the decorated function as first parameter.
 class User extends React.Component {
 
   static propTypes = {
-    name: React.PropTypes.string,
-    surname: React.PropTypes.string,
+    name: PropTypes.string,
+    surname: PropTypes.string,
   }
 
   @injectProps

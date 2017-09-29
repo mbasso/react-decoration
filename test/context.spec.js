@@ -1,6 +1,7 @@
 import expect from 'expect';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
+import PropTypes from 'prop-types';
+import ReactTestUtils from 'react-dom/test-utils';
 import {
   contextTypes,
   childContext,
@@ -10,7 +11,7 @@ import {
 
 describe('context', () => {
   const types = {
-    foo: React.PropTypes.string,
+    foo: PropTypes.string,
   };
 
   const values = {
@@ -65,13 +66,13 @@ describe('context', () => {
     class ContextProvider extends React.Component {
 
       static propTypes = {
-        children: React.PropTypes.any,
+        children: PropTypes.any,
       }
 
       render() {
         return (
           <div>
-              {this.props.children}
+            {this.props.children}
           </div>
         );
       }

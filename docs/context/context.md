@@ -6,7 +6,7 @@ Defines component's [childContextTypes and getChildContext](https://facebook.git
 
 ```js
 @context({
-  theme: React.PropTypes.object,
+  theme: PropTypes.object,
 }, {
   theme: {
     primaryColor: 'blue',

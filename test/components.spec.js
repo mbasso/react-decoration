@@ -1,7 +1,8 @@
 import expect from 'expect';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
-import Perf from 'react-addons-perf';
+import PropTypes from 'prop-types';
+import ReactTestUtils from 'react-dom/test-utils';
+import { createRenderer } from 'react-test-renderer/shallow';
 import {
   component,
   pureComponent,
@@ -21,12 +22,11 @@ import {
   renderChildren,
   renderComponent,
   handleRenderError,
-  perf,
 } from '../src/';
 
 describe('components', () => {
   const types = {
-    foo: React.PropTypes.string,
+    foo: PropTypes.string,
   };
 
   it('propTypes', () => {
@@ -85,7 +85,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div bar="foo" />);
     const span = renderer.getRenderOutput();
     expect(span.type).toBe('span');
@@ -125,7 +125,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div bar="foo" />);
     const span = renderer.getRenderOutput();
     expect(span.type).toBe('span');
@@ -149,7 +149,7 @@ describe('components', () => {
     }
 
     const renderDiv = () => {
-      const renderer = ReactTestUtils.createRenderer();
+      const renderer = createRenderer();
       renderer.render(<Div />);
     };
 
@@ -169,7 +169,7 @@ describe('components', () => {
     }
 
     const renderDiv = () => {
-      const renderer = ReactTestUtils.createRenderer();
+      const renderer = createRenderer();
       renderer.render(<Div />);
     };
 
@@ -209,7 +209,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div />);
     const result = renderer.getRenderOutput();
     expect(result.props.styles).toEqual(style);
@@ -223,8 +223,8 @@ describe('components', () => {
     class Div extends React.Component {
 
       static propTypes = {
-        name: React.PropTypes.string,
-        surname: React.PropTypes.string,
+        name: PropTypes.string,
+        surname: PropTypes.string,
       }
 
       render() {
@@ -234,7 +234,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div name="Matteo" surname="Basso" />);
     const div = renderer.getRenderOutput();
     expect(div.props.name).toEqual('Matteo');
@@ -257,7 +257,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div />);
     const div = renderer.getRenderOutput();
     expect(div.props.name).toEqual('Matteo');
@@ -270,7 +270,7 @@ describe('components', () => {
     class Div extends React.Component {
 
       static propTypes = {
-        foo: React.PropTypes.string,
+        foo: PropTypes.string,
       }
 
       render() {
@@ -280,7 +280,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" />);
     const result = renderer.getRenderOutput();
     expect(result.props).toEqual({
@@ -305,7 +305,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" example="example" />);
     const result = renderer.getRenderOutput();
     expect(result.props).toEqual({
@@ -333,7 +333,7 @@ describe('components', () => {
       }
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" example="example" />);
     const result = renderer.getRenderOutput();
     expect(result.props).toEqual({
@@ -345,14 +345,14 @@ describe('components', () => {
 
   it('clone', () => {
     // eslint-disable-next-line
-    class Foo extends React.Component{
+    class Foo extends React.Component {
 
       static propTypes = {
-        foo: React.PropTypes.string,
+        foo: PropTypes.string,
       }
 
       static childContextTypes = {
-        example: React.PropTypes.string,
+        example: PropTypes.string,
       }
 
       getChildContext() {
@@ -372,10 +372,10 @@ describe('components', () => {
 
     @clone(Foo)
     // eslint-disable-next-line
-    class Bar extends React.Component{
+    class Bar extends React.Component {
 
       static propTypes = {
-        bar: React.PropTypes.string,
+        bar: PropTypes.string,
       }
 
       render() {
@@ -388,15 +388,15 @@ describe('components', () => {
     }
 
     expect(Bar.propTypes).toEqual({
-      bar: React.PropTypes.string,
+      bar: PropTypes.string,
     });
     expect(Bar.childContextTypes).toEqual({
-      example: React.PropTypes.string,
+      example: PropTypes.string,
     });
     expect(Bar.prototype.getChildContext()).toEqual({
       example: 'fooBar',
     });
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Bar />);
     const rendered = renderer.getRenderOutput();
     expect(rendered.type).toBe('div');
@@ -432,7 +432,7 @@ describe('components', () => {
 
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Div foo="foo" bar="bar" example="example" />);
     const result = renderer.getRenderOutput();
     expect(result).toEqual(null);
@@ -445,7 +445,7 @@ describe('components', () => {
 
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(
       <Wrapper>
         <div />
@@ -474,7 +474,7 @@ describe('components', () => {
 
     }
 
-    const renderer = ReactTestUtils.createRenderer();
+    const renderer = createRenderer();
     renderer.render(<Bar foo="bar" />);
     const result = renderer.getRenderOutput();
     expect(result).toEqual(<Foo foo="bar" />);
@@ -493,7 +493,7 @@ describe('components', () => {
       }
     }
 
-    let renderer = ReactTestUtils.createRenderer();
+    let renderer = createRenderer();
     renderer.render(<Foo />);
     let result = renderer.getRenderOutput();
     expect(result).toEqual(<div>foo</div>);
@@ -507,7 +507,7 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Bar />);
     result = renderer.getRenderOutput();
     expect(result).toEqual(<div>Error during render</div>);
@@ -521,7 +521,7 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Foo2 />);
     result = renderer.getRenderOutput();
     expect(result).toEqual(<div>19</div>);
@@ -535,7 +535,7 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Bar2 />);
     result = renderer.getRenderOutput();
     expect(result).toEqual(<div>Unable to render this component</div>);
@@ -549,117 +549,10 @@ describe('components', () => {
       }
     }
 
-    renderer = ReactTestUtils.createRenderer();
+    renderer = createRenderer();
     renderer.render(<Foo3 />);
     result = renderer.getRenderOutput();
     expect(result.type).toEqual(Foo);
     expect(result.props.error).toBeA(Error);
-  });
-
-  it('perf', () => {
-    const spyStart = expect.spyOn(Perf, 'start');
-    const spyStop = expect.spyOn(Perf, 'stop');
-    const spyInclusive = expect.spyOn(Perf, 'printInclusive');
-    const spyExclusive = expect.spyOn(Perf, 'printExclusive');
-    let willMount;
-    let didMount;
-
-    const resetVariables = () => {
-      willMount = false;
-      didMount = false;
-    };
-    resetVariables();
-
-    @perf()
-    // eslint-disable-next-line
-    class Div extends React.Component {
-
-      componentWillMount() {
-        willMount = this.value;
-      }
-
-      componentDidMount() {
-        didMount = this.value;
-      }
-
-      value = true;
-
-      render() {
-        return (
-          <div />
-        );
-      }
-    }
-
-    ReactTestUtils.renderIntoDocument(<Div />);
-    expect(spyStart.calls.length).toEqual(1);
-    expect(spyStop.calls.length).toEqual(1);
-    expect(spyInclusive.calls.length).toEqual(0);
-    expect(spyExclusive.calls.length).toEqual(0);
-    expect(willMount).toEqual(true);
-    expect(didMount).toEqual(true);
-
-    resetVariables();
-
-    @perf({
-      prints: ['exclusive'],
-      event: 'mount',
-    })
-    // eslint-disable-next-line
-    class DivWithPerf extends React.Component {
-
-      componentWillMount() {
-        willMount = true;
-      }
-
-      componentDidMount() {
-        didMount = true;
-      }
-
-      render() {
-        return (
-          <div />
-        );
-      }
-    }
-
-    ReactTestUtils.renderIntoDocument(<DivWithPerf />);
-    expect(spyStart.calls.length).toEqual(2);
-    expect(spyStop.calls.length).toEqual(2);
-    expect(spyInclusive.calls.length).toEqual(0);
-    expect(spyExclusive.calls.length).toEqual(1);
-    expect(willMount).toEqual(true);
-    expect(didMount).toEqual(true);
-
-    resetVariables();
-
-    // eslint-disable-next-line
-    class DivWithMethodPerf extends React.Component {
-
-      @perf({
-        prints: ['inclusive', 'foo'],
-      })
-      process() {
-        willMount = this.value;
-        didMount = this.value;
-      }
-
-      value = true;
-
-      render() {
-        this.process();
-        return (
-          <div />
-        );
-      }
-    }
-
-    ReactTestUtils.renderIntoDocument(<DivWithMethodPerf />);
-    expect(spyStart.calls.length).toEqual(3);
-    expect(spyStop.calls.length).toEqual(3);
-    expect(spyInclusive.calls.length).toEqual(1);
-    expect(spyExclusive.calls.length).toEqual(1);
-    expect(willMount).toEqual(true);
-    expect(didMount).toEqual(true);
   });
 });

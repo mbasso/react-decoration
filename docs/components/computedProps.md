@@ -14,8 +14,8 @@ Defines computed props to inject into the decorated component.
 class User extends React.Component {
 
   static propTypes = {
-    name: React.PropTypes.string,
-    surname: React.PropTypes.string,
+    name: PropTypes.string,
+    surname: PropTypes.string,
   }
 
   static defaultProps = {

@@ -11,7 +11,7 @@ Bind the given props to the decorated component.
 class Foo extends React.Component {
 
   static contextTypes = {
-    foo: React.PropTypes.string,
+    foo: PropTypes.string,
   }
 
   static defaultProps = {

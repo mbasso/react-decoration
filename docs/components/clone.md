@@ -8,11 +8,11 @@ Creates a new Component starting from the given one. Methods and attributes defi
 class Foo extends React.Component{
 
   static propTypes = {
-    foo: React.PropTypes.string,
+    foo: PropTypes.string,
   }
 
   static childContextTypes = {
-    example: React.PropTypes.string,
+    example: PropTypes.string,
   }
 
   getChildContext() {
@@ -35,7 +35,7 @@ class Bar extends React.Component{
 
   // replace Foo.propTypes
   static propTypes = {
-    bar: React.PropTypes.string,
+    bar: PropTypes.string,
   }
 
   // replace Foo render
@@ -52,11 +52,11 @@ class Bar extends React.Component{
 // class Bar extends React.Component{
 //
 //   static propTypes = {
-//     bar: React.PropTypes.string,
+//     bar: PropTypes.string,
 //   }
 //
 //   static childContextTypes = {
-//     example: React.PropTypes.string,
+//     example: PropTypes.string,
 //   }
 //
 //   getChildContext() {
