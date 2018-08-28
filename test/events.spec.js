@@ -5,6 +5,7 @@ import {
   stopPropagation,
   preventDefault,
   killEvent,
+  persistEvent,
   extractFromEvent,
   extractCurrentTarget,
   extractTarget,
@@ -92,6 +93,28 @@ describe('events', () => {
               spyPreventDefault = expect.spyOn(e, 'preventDefault');
               this.onChange(e, ...params);
             }}
+          />
+        );
+      }
+    }
+    const rendered = ReactTestUtils.renderIntoDocument(<Input />);
+    const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
+    ReactTestUtils.Simulate.change(input);
+  });
+
+  it('persistEvent', (done) => {
+    // eslint-disable-next-line
+    class Input extends React.Component {
+      @persistEvent
+      onChange(event) {
+        expect(event.isPersistent()).toBe(true);
+        done();
+      }
+
+      render() {
+        return (
+          <input
+            onChange={this.onChange}
           />
         );
       }
