@@ -9,6 +9,7 @@ import {
   injectProps,
   injectState,
   debounce,
+  lock,
   throttle,
   trace,
   time,
@@ -204,6 +205,47 @@ describe('functions', () => {
 
     simulateTextInput(TrailingEdgeInput);
     simulateTextInput(LeadingEdgeInput);
+  });
+
+  it('lock', (done) => {
+    const simulateTextInput = (Input) => {
+      const rendered = ReactTestUtils.renderIntoDocument(<Input />);
+      const input = ReactTestUtils.findRenderedDOMComponentWithTag(rendered, 'input');
+      ReactTestUtils.Simulate.change(input, { target: { value: 'first' } });
+      ReactTestUtils.Simulate.change(input, { target: { value: 'second' } });
+      setTimeout(() => {
+        ReactTestUtils.Simulate.change(input, { target: { value: 'third' } });
+      }, 400);
+    };
+
+    // eslint-disable-next-line
+    class LockedInput extends React.Component {
+      constructor(...params) {
+        super(...params);
+        this.onChange = this.onChange.bind(this);
+        this.counter = 0;
+      }
+
+      @lock
+      onChange(e) {
+        expect(e.target.value).toEqual('first');
+        this.counter += 1;
+        if (this.counter > 0) {
+          expect(this.counter).toEqual(1);
+          done();
+        }
+      }
+
+      render() {
+        return (
+          <input
+            onChange={this.onChange}
+          />
+        );
+      }
+    }
+
+    simulateTextInput(LockedInput);
   });
 
   it('throttle', (done) => {

@@ -1,6 +1,6 @@
 {
   "name": "react-decoration",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A collection of @decorators for React Components",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
