@@ -30,6 +30,7 @@ export extractValue from './decorators/events/extractValue';
 export extractNativeEvent from './decorators/events/extractNativeEvent';
 export extractDataset from './decorators/events/extractDataset';
 export autobind from './decorators/functions/autobind';
+export lock from './decorators/functions/lock';
 export log from './decorators/functions/log';
 export inject from './decorators/functions/inject';
 export injectProps from './decorators/functions/injectProps';

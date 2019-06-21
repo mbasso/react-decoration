@@ -28,6 +28,7 @@ Here you can find the complete list of decorators, however we encourage you to r
   - [`@injectProps`](functions/injectProps.md)
   - [`@injectState`](functions/injectState.md)
   - [`@debounce(wait: number = 300, immediate: boolean = false)`](functions/debounce.md)
+  - [`@lock`](functions/lock.md)
   - [`@throttle(wait: number = 300, options: Object = { leading: true, trailing: true })`](functions/throttle.md)
   - [`@trace`](functions/trace.md)
   - [`@time(label: string)`](functions/time.md)
